@@ -12,11 +12,12 @@ import os
 import shutil
 os.makedirs("frames", exist_ok=True)
 frame_count = 0
-parser = argparse.ArgumentParser(description="Blur")
+parser = argparse.ArgumentParser(description="Blurs faces using Haar cascade classification.")
 parser.add_argument("--input", required=True, help="Path to the input video file.")
-parser.add_argument("--output", required=True)
+parser.add_argument("--output", required=True, help="Path to the output video file.")
+parser.add_argument("--classifier", required=True, help="Path to haarcascade_frontalface_default.xml")
 args = parser.parse_args()
-face_cascade = cv2.CascadeClassifier("./venv/lib/python3.12/site-packages/cv2/data/haarcascade_frontalface_default.xml")
+face_cascade = args.classifier
 cap = cv2.VideoCapture(args.input)
 fps = cap.get(cv2.CAP_PROP_FPS)
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -57,4 +58,3 @@ except subprocess.CalledProcessError as e:
     exit(4)
 shutil.rmtree("./frames")
 print("Done!")
-
