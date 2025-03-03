@@ -56,14 +56,9 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-
-ffmpeg_cmd = (
-    f"ffmpeg -y -framerate {int(fps)} "
-    f"-i frames/frame_%05d.png "
-    "-c:v libx265 -crf 12 -preset slow -b:v 10M -pix_fmt yuv420p "
-    f"{args.output}"
-)
-print(f"Running ffmpeg command: {ffmpeg_cmd}")
+threads = os.cpu_count()
+ffmpeg_cmd = (f"ffmpeg -y -framerate {int(fps)} -i frames/frame_%05d.png -c:v libx265 -crf 12 -preset slow -b:v 10M -pix_fmt yuv420p -threads {threads} {args.output}")
+print(f"FFMPEGing with {ffmpeg_cmd}...")
 try:
     subprocess.run(ffmpeg_cmd, shell=True, check=True)
 except subprocess.CalledProcessError as e:

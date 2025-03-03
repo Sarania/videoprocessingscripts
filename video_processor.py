@@ -61,10 +61,10 @@ def main():
         # Use ffmpeg to extract each chunk.
         threads = os.cpu_count()
         enc = "-c:v hevc_nvenc -tune hq -cq 16 -preset slow -an" if not args.cpu else f"-c:v libx265 -crf 12 -preset medium -an -threads {threads}"
-        cmd_ffmpeg = f"ffmpeg -y -ss {str(start_time_sec + args.offset)} -i '{input_file}' -t  {str(segment_duration_sec)} -r {str(target_fps)} {enc} '{output_filename}'"
-        print(cmd_ffmpeg)
+        ffmpeg_cmd = f"ffmpeg -y -ss {str(start_time_sec + args.offset)} -i '{input_file}' -t  {str(segment_duration_sec)} -r {str(target_fps)} {enc} '{output_filename}'"
+        print(f"FFMPEGing with {ffmpeg_cmd}...")
         try:
-            subprocess.run(cmd_ffmpeg, shell=True, check=True)
+            subprocess.run(ffmpeg_cmd, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error processing segment {i}:", e)
             break
