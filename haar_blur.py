@@ -56,3 +56,5 @@ except subprocess.CalledProcessError as e:
     print(f"Error encoding frames with ffmpeg: {e}", e)
     exit(4)
 shutil.rmtree("./frames")
+print("Done!")
+
