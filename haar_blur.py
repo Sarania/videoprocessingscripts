@@ -17,7 +17,7 @@ parser.add_argument("--input", required=True, help="Path to the input video file
 parser.add_argument("--output", required=True, help="Path to the output video file.")
 parser.add_argument("--classifier", required=True, help="Path to haarcascade_frontalface_default.xml")
 args = parser.parse_args()
-face_cascade = args.classifier
+face_cascade = cv2.CascadeClassifier(args.classifier)
 cap = cv2.VideoCapture(args.input)
 fps = cap.get(cv2.CAP_PROP_FPS)
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
